@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Project 1 Summary and Requirements
+Build a fullstack application using Spring Boot & React. Back your data with a SQL database, expose with an HTTP API, and a webapp UI.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Technology Requirements
+- Spring Boot
+- Spring Web, Spring JPA (or JDBC)
+- SQL (H2 embedded, Postgres, etc)
+- React
+- Maven
+- GitHub
 
-## Available Scripts
+## Deadline & Presentation
+- First Checkpoint: 9/26
+- Final Presentation: 10/10
 
-In the project directory, you can run:
+## Example Project - Employee Reimbursement System
+A system for employees to submit reimbursement tickets, and for managers to view and approve/deny them.
 
-### `npm start`
+Employee Users can:
+- Create an account
+- Create a new Reimbursement
+- See their reimbursement tickets
+- See only pending reimbursement tickets
+- Edit a reimbursement ticket
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Manager Users can:
+- See all Reimbursements
+- See all pending Reimbursements
+- Resolve (approve/deny) a reimbursement
+- See all Users
+- Delete a User
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Optional Ideas:
+- Users who are not logged in can only attempt to log in or register for a new account
+- Logging of the service layer
+- Test suites for the service layer
+- Logging out functionality
 
-### `npm test`
+- - - 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Getting Started
 
-### `npm run build`
+### Reference Documentation
+For further reference, please consider the following sections:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/3.5.6/maven-plugin)
+* [Create an OCI image](https://docs.spring.io/spring-boot/3.5.6/maven-plugin/build-image.html)
+* [Spring Web](https://docs.spring.io/spring-boot/3.5.6/reference/web/servlet.html)
+* [Spring Data JPA](https://docs.spring.io/spring-boot/3.5.6/reference/data/sql.html#data.sql.jpa-and-spring-data)
+* [Spring Boot DevTools](https://docs.spring.io/spring-boot/3.5.6/reference/using/devtools.html)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Guides
+The following guides illustrate how to use some features concretely:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
+* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
+* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 
-### `npm run eject`
+### Maven Parent overrides
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Due to Maven's design, elements are inherited from the parent POM to the project POM.
+While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the parent.
+To prevent this, the project POM contains empty overrides for these elements.
+If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
