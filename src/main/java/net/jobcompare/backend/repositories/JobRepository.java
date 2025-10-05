@@ -14,12 +14,14 @@ import net.jobcompare.backend.entities.*;
 public interface JobRepository extends JpaRepository<Job, Integer> {
 
     /* OMITTED: employed built-in .findlAll() method from 'JPARepository' for these CRUD functionalities */
-//     public List<Job> getAllJobs();
-//     public Job findByJobId(Integer jobId);
-//     public Job updateByJobId(Integer jobId, Job job);
-//     public Job deleteByJobId(Integer jobId);
-//     // '@Query' annotation from JPA to retrieve all job openings posted by one particular recruiter
-//     // Aside: 'recruiterId' is the PRIMARY_KEY in its own table while also being a FOREIGN_KEY to 'jobs' DB table, connecting the two
-//     @Query("SELECT opening FROM jobs WHERE opening.teamId = :recruiterId")
-//     public List<Job> findAllJobsByTeamId(Integer recruiterId);
+    //     public List<Job> getAllJobs();
+    //     public Job findByJobId(Integer jobId);
+    //     public Job updateByJobId(Integer jobId, Job job);
+    //     public Job deleteByJobId(Integer jobId);
+    //     // '@Query' annotation from JPA to retrieve all job openings posted by one particular recruiter
+    //     // Aside: 'modId' is the PRIMARY_KEY in its own table while also being a FOREIGN_KEY to 'jobs' DB table, connecting the two
+    //     @Query("SELECT opening FROM jobs WHERE opening.modId = :modId")
+    //     public List<Job> findAllJobsByTeamId(Integer modId);
+
+    public List<Job> findByModId(Integer modId);
 }
