@@ -74,10 +74,12 @@ public class Job {
     public Job(String title, String company, String location, Integer costOfLivingIndex, Float yearlySalary, String hiringTeamEmail){
         this.title = title;
         this.company = company;
-        this.locationCity = locationCity;
-        this.locationState = locationState;
+        this.location = location;
+        // this.locationCity = locationCity;
+        // this.locationState = locationState;
         this.costOfLivingIndex = costOfLivingIndex;
         this.yearlySalary = yearlySalary;
+        this.hiringTeamEmail = hiringTeamEmail;
     }
 
 }
