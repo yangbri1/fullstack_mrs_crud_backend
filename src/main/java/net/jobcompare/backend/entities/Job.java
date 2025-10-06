@@ -45,7 +45,7 @@ public class Job {
     /* Aside: default behavior was 'GenerationType.AUTO' in which JPA picks strategy depending on selected DB dialect (MySQL, Oracle, etc.)   */
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer jobId;
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     private String title;
     @Column(name = "description")
     private String description;

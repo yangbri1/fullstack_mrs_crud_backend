@@ -61,51 +61,47 @@ public class JobService {
         return jobList;
     }
 
-    // create a 'Job' 
+    // create a 'Job' after validating the input fields & .save() to DB table
     public Job createJob(Job job) throws Exception{
-        // initialization block for all the schema fields
-        String jobTitle = job.getTitle();
-        String jobCompany = job.getCompany();
-        String jobLocation = job.getLocation();
-        String jobDescription = job.getDescription();
-        String jobEmail = job.getHiringTeamEmail();
+        // initialization block for all the schema fields ... NOT really needed as helper function 'validateJobFields()' takes whole 'job' as argument
+        // String jobTitle = job.getTitle();
+        // String jobCompany = job.getCompany();
+        // String jobLocation = job.getLocation();
+        // String jobDescription = job.getDescription();
+        // String jobEmail = job.getHiringTeamEmail();
 
-        Integer yearOfExperience = job.getYearOfExperience();
-        Integer costOfLiving = job.getCostOfLivingIndex();
+        // Integer yearOfExperience = job.getYearOfExperience();
+        // Integer costOfLiving = job.getCostOfLivingIndex();
         // Integer moderatorId = job.getModId();
 
         // Long timeOfPosting = job.getTimeOfPosting();
-        Float yearlySalary = job.getYearlySalary();
+        // Float yearlySalary = job.getYearlySalary();
 
-        // if job description fields does NOT contain anything ...
-        if(jobTitle.isEmpty() || jobCompany.isEmpty() || jobLocation.isEmpty() || jobDescription.isEmpty() || jobEmail.isEmpty()){
-            throw new Exception("Schema field is empty");
-        }
+        // call 'validateJobFields()' helper method to validate user inputted fields
+        validateJobFields(job);
         
-        // else if any of the core job fields are above the character limit ...
-        if(jobTitle.length() > 60 || jobCompany.length() > 20|| jobLocation.length() > 85 || jobDescription.length() > 4000 || jobEmail.length() > 60){
-            throw new Exception("Schema field exceeds length");
-        }
-
+        /* OMITTED since 'jobId' key generation will be automatic from Spring (we want this!) */
         // else if 'jobId' DNE ...
-        /* EQUIVALENT to 'if(messageOptional.isEmpty()){...}' logic-wise, req. Optional to be declare earlier*/
-        if(!jobRepository.existsById(job.getJobId())){  // job.getModId()
-            throw new Exception("jobId field DNE");
-        }
+        /* EQUIVALENT to 'if(jobOptional.isEmpty()){...}' logic-wise, req. Optional to be declare earlier*/
+        // if(!jobRepository.existsById(job.getJobId())){  // job.getModId()
+        //     throw new Exception("jobId field DNE");
+        // }
 
         // create an 'Optional' obj
         // call .findById() method to retrieve 'Job' record from DB fitting given parameter 'jobId'
-        Optional<Job> jobOptional = jobRepository.findById(job.getJobId());
+        // Optional<Job> jobOptional = jobRepository.findById(job.getJobId());
         // if value assigned to 'jobOptional' container obj's value is NON-null
-        if(jobOptional.isPresent()){
-            // grab the value via .get() method from 'java.util.Optional' package
-            Job position = jobOptional.get();
-            // persist changes to 'Job' DB table
-            jobRepository.save(position);
-            return position;
-        }
-        // otw if value from 'jobOptional' is indeed NULL ... return default falsy value (null)
-        return null;
+        // if(jobOptional.isPresent()){
+        //     // grab the value via .get() method from 'java.util.Optional' package
+        //     Job position = jobOptional.get();
+        //     // persist changes to 'Job' DB table
+        //     jobRepository.save(position);
+        //     return position;
+        // }
+        // // otw if value from 'jobOptional' is indeed NULL ... return default falsy value (null)
+        // return null;
+        // .save() given fields into 'Job' DB table
+        return jobRepository.save(job);
     }
 
     // public Optional<Job> updateJob(Integer jobId, String title, String description, String company, String location, 
@@ -126,40 +122,44 @@ public class JobService {
 
         Integer yearOfExperience = job.getYearOfExperience();
         Integer costOfLiving = job.getCostOfLivingIndex();
-        // Integer moderatorId = job.getModId();
+        Integer moderatorId = job.getModId();
 
-        // Long timeOfPosting = job.getTimeOfPosting();
+        Long timeOfPosting = job.getTimeOfPosting();
         Float yearlySalary = job.getYearlySalary();
 
-        // if job description fields does NOT contain anything ...
-        if(jobTitle.isEmpty() || jobCompany.isEmpty() || jobLocation.isEmpty() || jobDescription.isEmpty() || jobEmail.isEmpty()){
-            throw new Exception("Schema field is empty [UPDATE]");
+        // invoke helper function to validate 'Job' fields
+        validateJobFields(job);
+        
+        // create an 'Optional' obj instance        
+        // call .findById() method to retrieve 'Job' record from DB fitting given parameter 'jobId'
+        Optional<Job> jobOptional = jobRepository.findById(jobId);
+        // if 'jobId' DNE ...
+        if(jobOptional.isEmpty()){ // ' logic-wise, req. Optional to be declare earlier 
+        // if(!jobRepository.existsById(job.getJobId())){  // job.getModId()
+            throw new Exception("jobId(" + jobId + ") field DNE [UPDATE]");
         }
         
-        // else if any of the core job fields are above the character limit ...
-        if(jobTitle.length() > 60 || jobCompany.length() > 20|| jobLocation.length() > 85 || jobDescription.length() > 4000 || jobEmail.length() > 60){
-            throw new Exception("Schema field exceeds length [UPDATE]");
-        }
-
-        // else if 'jobId' DNE ...
-        /* EQUIVALENT to 'if(jobOptional.isEmpty()){...}' logic-wise, req. Optional to be declare earlier*/
-        if(!jobRepository.existsById(job.getJobId())){  // job.getModId()
-            throw new Exception("jobId field DNE [UPDATE]");
-        }
-
-        // create an 'Optional' obj
-        // call .findById() method to retrieve 'Job' record from DB fitting given parameter 'jobId'
-        Optional<Job> jobOptional = jobRepository.findById(job.getJobId());
-        // if value assigned to 'jobOptional' container obj's value is NON-null
+        // else if value assigned to 'jobOptional' container obj's value is NON-null
+        /* aka 'jobId' does EXIST ... below if-statement could be omitted */
         if(jobOptional.isPresent()){
             // grab the value via .get() method from 'java.util.Optional' package
             Job position = jobOptional.get();
             // extract 'description' field from provided 'Job' arg & use setter function to overwrite old 'description'
             position.setDescription(job.getDescription());
+            position.setTitle(jobTitle);
+            position.setCompany(jobCompany);
+            position.setLocation(jobLocation);
+            position.setHiringTeamEmail(jobEmail);
+            position.setYearOfExperience(yearOfExperience);
+            position.setCostOfLivingIndex(costOfLiving);
+            position.setModId(moderatorId);
+            position.setTimeOfPosting(timeOfPosting);
+            position.setYearlySalary(yearlySalary);
+
             // persist changes to 'Job' DB table
             jobRepository.save(position);
             // tying up loose ends 
-            jobRepository.deleteById(jobId);
+            // jobRepository.deleteById(jobId);
             // return updated job offering
             return position;    // return 1
         }
@@ -178,6 +178,27 @@ public class JobService {
             return 1;
         }
         // otw if the value from 'jobOptional' is indeed NULL ... return default falsy value (null)
-        return null;
+        return 0;
+    }
+
+    // helper function for 'Job' field validation (presented in both 'createJob()' & 'updateByJobId()' methods)
+    public void validateJobFields(Job job) throws Exception{
+        // initialzation block
+        String jobTitle = job.getTitle();
+        String jobCompany = job.getCompany();
+        String jobLocation = job.getLocation();
+        String jobDescription = job.getDescription();
+        String jobEmail = job.getHiringTeamEmail();
+
+        // if job description fields does NOT contain anything ...
+        if(jobTitle.isEmpty() || jobCompany.isEmpty() || jobLocation.isEmpty() || jobDescription.isEmpty() || jobEmail.isEmpty()){
+            throw new Exception("Schema field is empty ");
+        }
+        
+        // else if any of the core job fields are above the character limit ...
+        if(jobTitle.length() > 60 || jobCompany.length() > 20|| jobLocation.length() > 85 || jobDescription.length() > 4000 || jobEmail.length() > 60){
+            throw new Exception("Schema field exceeds length ");
+        }
+        
     }
 }
