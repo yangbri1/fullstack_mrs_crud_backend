@@ -32,16 +32,36 @@ public class JobService {
         this.jobRepository = jobRepository;
     }
 
-    // API should be able to retrieve all messages
+    // API should be able to retrieve all job offerings
     public List<Job> getAllJobs(){
         // employ built-in .findAll() method from CrudRepository (extends from JpaRepository) to find all 'Job' object entities/records in 'Job' DB table
         return jobRepository.findAll();
     }
 
-    // public Job findByJobId(){
-        
-    // }
+    // retrieve  one job offering under 'jobId'
+    public Job findByJobId(Integer jobId){
+        // call .findById() method to retrieve 'Job' entity/record from DB fitting given parameter 'jobId'
+        Optional<Job> jobOptional = jobRepository.findById(jobId);
+        // if value assigned to 'jobOptional' container obj is of a non-null nature ...
+        if(jobOptional.isPresent()){
+            // grab the value via .get() method from 'java.util.Optional' package
+            Job job = jobOptional.get();
+            // return 'Job' entity
+            return job;
+        }
+        // otw if the value from 'jobOptional' is indeed NULL ... return default falsy value (null)
+        return null;
+    }
 
+    // retrieve all job offerings under specific 'modId'
+    public List<Job> getAllJobsByModId(Integer modId){
+        // initialize 'jobList' List variable to gather up all 'Job' records associated to given 'modId'
+        List<Job> jobList = jobRepository.findByModId(modId);
+        // return List of 'Job' objects 
+        return jobList;
+    }
+
+    // create a 'Job' 
     public Job createJob(Job job) throws Exception{
         // initialization block for all the schema fields
         String jobTitle = job.getTitle();
@@ -52,9 +72,9 @@ public class JobService {
 
         Integer yearOfExperience = job.getYearOfExperience();
         Integer costOfLiving = job.getCostOfLivingIndex();
-        Integer moderatorId = job.getModId();
+        // Integer moderatorId = job.getModId();
 
-        Long timeOfPosting = job.getTimeOfPosting();
+        // Long timeOfPosting = job.getTimeOfPosting();
         Float yearlySalary = job.getYearlySalary();
 
         // if job description fields does NOT contain anything ...
@@ -85,6 +105,31 @@ public class JobService {
             return position;
         }
         // otw if value from 'jobOptional' is indeed NULL ... return default falsy value (null)
+        return null;
+    }
+
+    // public Optional<Job> updateJob(Integer jobId, String title, String description, String company, String location, 
+    // Integer yearOfExperience, Integer costOfLivingIndex, Float yearlySalary, String hiringTeamEmail, Long timeOfPosting, Integer modId){
+    //     // if find the 'Job' obj via 'jobId'
+    //     if(jobRepository.findById(jobId).isPresent()){
+    //         if()
+    //     }
+    // }
+
+    public Integer updateByJobId(Integer jobId, Job job) throws Exception{
+        
+    }
+    public Integer deleteJob(Integer jobId){    // void
+        // call .findById() method to retrieve 'Job' entity/record from DB fitting given parameter 'jobId'
+        Optional<Job> jobOptional = jobRepository.findById(jobId);
+        // if value assigned to 'jobOptional' container obj is of a non-null nature ...
+        if(jobOptional.isPresent()){
+            // use JpaRepository's .deleteById() method to remove 'Job' entity associated w/ passed in 'jobId'
+            jobRepository.deleteById(jobId);
+            // return 1 as wished (represents number of entity changed from this deletion process)
+            return 1;
+        }
+        // otw if the value from 'jobOptional' is indeed NULL ... return default falsy value (null)
         return null;
     }
 }
