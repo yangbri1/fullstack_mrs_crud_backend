@@ -167,7 +167,7 @@ public class JobService {
         return null;
     }
 
-    public Integer deleteJob(Integer jobId){    // void
+    public Integer deleteByJobId(Integer jobId){    // void
         // call .findById() method to retrieve 'Job' entity/record from DB fitting given parameter 'jobId'
         Optional<Job> jobOptional = jobRepository.findById(jobId);
         // if value assigned to 'jobOptional' container obj is of a non-null nature ...
