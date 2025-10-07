@@ -38,14 +38,23 @@ Optional Ideas:
 
 - - - 
 # References
+
+* Best length of description and field members for optiminal SEO 
 https://www.baeldung.com/java-optional
 https://theundercoverrecruiter.com/tips-writing-job-descriptions/
 https://www.mentalfloss.com/article/646581/world-longest-place-names
 https://atdata.com/blog/long-email-addresses/
 
+* `@CreationTimestamp` annotation allows Hibernate to populate field automatically with timestamp of an entity first creation
 https://stackoverflow.com/questions/49954812/how-can-you-make-a-created-at-column-generate-the-creation-date-time-automatical
 https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#mapping-generated-CreationTimestamp
+
+* Explicitly force Spring Boot to load data to initialzie database from `data.sql`
+https://stackoverflow.com/questions/45082574/spring-boot-doesnt-load-data-to-initialize-database-using-data-sql
+
+
 - - -
+
 # Getting Started
 
 ### Reference Documentation

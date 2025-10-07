@@ -58,11 +58,11 @@ public class Job {
     private String company;
     @Column(name = "location")
     private String location; 
-    @Column(name = "yearOfExperience")
+    @Column(name = "year_of_experience")    // method 1: 1) explicitly change column's name to underscores as w/ camelCase H2 will UPPERCASE all (cause troubles as H2 is sensitive as it is ...) --- not quotes needed in `data.sql`
     private Integer yearOfExperience;
-    @Column(name = "costOfLivingIndex")
+    @Column(name = "cost_of_living_index")  // method 2: 1) update column mappings as "\costOfLivingIndex\" so H2 DB will display this at it is & 2) double quotes respective camelCase column fields in `data.sql`
     private Integer costOfLivingIndex;
-    @Column(name = "yearlySalary")
+    @Column(name = "yearly_salary")
     private Float yearlySalary;
     // '@Column' annotation maps 'hiringTeamEmail' field to 'email' column where it must NOT be of null value & it's unique (no duplicates)
     // '@Column' annotation by default aka w/o this annotation would map its field name to a column of DB table using exact same name ...
@@ -72,7 +72,7 @@ public class Job {
     private String hiringTeamEmail;
     // 'teamId' field in this 'Job' schema must be non-falsy (not empty)
     /* Aside: including 'unique = true' property disallows moderator from creating multiple jobs so EXCLUDED here */
-    @Column(name = "modId", nullable = false)
+    @Column(name = "mod_id", nullable = false)
     private Integer modId;
 
     @Column(name = "createdOn")
