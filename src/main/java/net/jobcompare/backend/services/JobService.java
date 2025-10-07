@@ -75,7 +75,7 @@ public class JobService {
         // Integer costOfLiving = job.getCostOfLivingIndex();
         // Integer moderatorId = job.getModId();
 
-        // Long timeOfPosting = job.getTimeOfPosting();
+        // Long createdOn = job.getCreatedOn();
         // Float yearlySalary = job.getYearlySalary();
 
         // call 'validateJobFields()' helper method to validate user inputted fields
@@ -125,7 +125,7 @@ public class JobService {
         Integer costOfLiving = job.getCostOfLivingIndex();
         Integer moderatorId = job.getModId();
 
-        Long timeOfPosting = job.getTimeOfPosting();
+        // Long createdOn = job.getCreatedOn();
         Float yearlySalary = job.getYearlySalary();
 
         // invoke helper function to validate 'Job' fields
@@ -154,7 +154,7 @@ public class JobService {
             position.setYearOfExperience(yearOfExperience);
             position.setCostOfLivingIndex(costOfLiving);
             position.setModId(moderatorId);
-            position.setTimeOfPosting(timeOfPosting);
+            // position.setCreatedOn(createdOn);
             position.setYearlySalary(yearlySalary);
 
             // persist changes to 'Job' DB table

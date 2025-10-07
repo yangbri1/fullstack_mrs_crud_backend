@@ -42,6 +42,9 @@ https://www.baeldung.com/java-optional
 https://theundercoverrecruiter.com/tips-writing-job-descriptions/
 https://www.mentalfloss.com/article/646581/world-longest-place-names
 https://atdata.com/blog/long-email-addresses/
+
+https://stackoverflow.com/questions/49954812/how-can-you-make-a-created-at-column-generate-the-creation-date-time-automatical
+https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#mapping-generated-CreationTimestamp
 - - -
 # Getting Started
 
