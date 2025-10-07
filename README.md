@@ -37,7 +37,12 @@ Optional Ideas:
 - Logging out functionality
 
 - - - 
-
+# References
+https://www.baeldung.com/java-optional
+https://theundercoverrecruiter.com/tips-writing-job-descriptions/
+https://www.mentalfloss.com/article/646581/world-longest-place-names
+https://atdata.com/blog/long-email-addresses/
+- - -
 # Getting Started
 
 ### Reference Documentation

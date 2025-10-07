@@ -1,3 +1,4 @@
+/* 'JobService' service layer contains the business logic  */
 package net.jobcompare.backend.services;
 
 // import entity classes
@@ -54,7 +55,7 @@ public class JobService {
     }
 
     // retrieve all job offerings under specific 'modId'
-    public List<Job> getAllJobsByModId(Integer modId){
+    public List<Job> findByModId(Integer modId){
         // initialize 'jobList' List variable to gather up all 'Job' records associated to given 'modId'
         List<Job> jobList = jobRepository.findByModId(modId);
         // return List of 'Job' objects 
