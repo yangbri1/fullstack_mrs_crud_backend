@@ -9,6 +9,7 @@ import net.jobcompare.backend.services.*;
 // import relevant annotations from Spring framework to help create RESTful API endpoints
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 // import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,13 +69,15 @@ public class JobController {
 
     // POST a new job offering
     @PostMapping("/jobs")
-    public ResponseEntity<Job> newJob(@RequestBody Job job){
+    public ResponseEntity<Job> newJob(@RequestBody Job job){    // '@RequestBody' annotation extracts the JSON from HTTP request & conver it to 'Job' obj
         // try-catch block for error handling the unhandled Exceptions (500) 
         try {
             // attempt to add new job offering via .createJob() method in 'JobService.java' class
             Job position = jobService.createJob(job);
             // return newly added job w/ status code 200 (OK)
-            return ResponseEntity.ok(position);
+            // return ResponseEntity.ok(position);
+            // return newly added job w/ status code 201 (CREATED) --- above works too
+            return new ResponseEntity<>(position, HttpStatus.CREATED);
             // catch any thrown Exceptions ...
         } catch (Exception e) {
             // If any exception occurs, return a 400 HTTP response code (Bad Request)

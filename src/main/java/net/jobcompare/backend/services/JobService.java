@@ -3,8 +3,8 @@ package net.jobcompare.backend.services;
 
 // import entity classes
 import net.jobcompare.backend.entities.Job;
-
-//
+import net.jobcompare.backend.entities.Job.WorkArrangement; // import enum for 'workArrangement' field to use 'WorkArrangement' obj data type
+// import 'JobRepository' class which extends from JPARepository --- containing some built-in CRUD methods
 import net.jobcompare.backend.repositories.JobRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +122,7 @@ public class JobService {
         String jobEmail = job.getHiringTeamEmail();
 
         Integer yearOfExperience = job.getYearOfExperience();
-        Integer costOfLiving = job.getCostOfLivingIndex();
+        WorkArrangement workArrangement = job.getWorkArrangement();
         Integer moderatorId = job.getModId();
 
         // Long createdOn = job.getCreatedOn();
@@ -152,7 +152,7 @@ public class JobService {
             position.setLocation(jobLocation);
             position.setHiringTeamEmail(jobEmail);
             position.setYearOfExperience(yearOfExperience);
-            position.setCostOfLivingIndex(costOfLiving);
+            position.setWorkArrangement(workArrangement);
             position.setModId(moderatorId);
             // position.setCreatedOn(createdOn);
             position.setYearlySalary(yearlySalary);

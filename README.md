@@ -52,7 +52,10 @@ https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_Use
 * Explicitly force Spring Boot to load data to initialzie database from `data.sql`
 https://stackoverflow.com/questions/45082574/spring-boot-doesnt-load-data-to-initialize-database-using-data-sql
 
-
+* Enum for constants for `WorkArrangement` field
+https://www.baeldung.com/a-guide-to-java-enums 
+https://stackoverflow.com/questions/67233340/how-do-i-validate-or-restrict-enum-type-to-accept-only-specific-values
+https://www.baeldung.com/jpa-persisting-enums-in-jpa
 - - -
 
 # Getting Started
