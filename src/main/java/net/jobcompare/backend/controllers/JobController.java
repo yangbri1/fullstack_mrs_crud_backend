@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;    // for retrieval of work assignment (filter way)
 // import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -88,6 +89,21 @@ public class JobController {
         List<Job> onsitePositions = jobService.getAllHybrid();
         return ResponseEntity.ok(onsitePositions);
     }
+
+    // alternative filter way to retrieve work arrangement type
+    @GetMapping("/jobs/filter")
+    public ResponseEntity<List<Job>> findByWorkArrangement(@RequestParam("work_arrangement") WorkArrangement workArrangement){
+        // ex. HTTP GET Request: 'http://localhost:8080/jobs/filter?work_arrangement=HYBRID' -> returns 'HYBRID' job offerings
+        try {
+            // call 'findWorkArrangement()' from 'JobService' service layer to retrieve a List of job offerings
+            List<Job> filteredPositions = jobService.findByWorkArrangement(workArrangement);
+            return new ResponseEntity<>(filteredPositions, HttpStatus.CREATED);
+        } catch (Exception e) {
+            // if any exception arises, return status code 400 w/ null in response body
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+    
 
     // POST a new job offering
     @PostMapping("/jobs")

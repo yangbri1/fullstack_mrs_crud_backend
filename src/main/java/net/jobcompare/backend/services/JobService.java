@@ -82,6 +82,7 @@ public class JobService {
         return hybridRoles;
     }
 
+    /*--- filter via query params way to return particular work arrangement type ---*/
     // retrieve all job offerings --- for now very similar to above 'findByModId()'
     public List<Job> findByWorkArrangement(WorkArrangement workArrangement){
         // call on '.findByWorkArrangement()' method from 'JobRepository' class w/ given 'workArrangement' arg to retrieve a List of job offerings
