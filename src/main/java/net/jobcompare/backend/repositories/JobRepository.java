@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 // import 'Job.java' '@Entity' class
 import net.jobcompare.backend.entities.*;
+import net.jobcompare.backend.entities.Job.WorkArrangement;
 
 // 'JobRepository.java' class inherits the CRUD operations and attributes from 'JpaRepository' (which takes in 'Job' entity class & 'jobId' data type as args)
 public interface JobRepository extends JpaRepository<Job, Integer> {
@@ -23,5 +24,9 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     //     @Query("SELECT opening FROM jobs WHERE opening.modId = :modId")
     //     public List<Job> findAllJobsByTeamId(Integer modId);
 
+    // Spring JPA automatically implement this method signature
     public List<Job> findByModId(Integer modId);
+    // Spring JPA will implement this using 'enum' value
+    // Aside: `Job.WorkArrangement` as enum is in 'Job' entity class (could separate enum if want more modularity)
+    public List<Job> findByWorkArrangment(Job.WorkArrangement workArrangement);
 }

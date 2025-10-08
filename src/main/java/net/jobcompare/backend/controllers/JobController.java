@@ -3,6 +3,7 @@ package net.jobcompare.backend.controllers;
 
 // import 'Job.java' & ... classes from 'entities' directory
 import net.jobcompare.backend.entities.*;
+import net.jobcompare.backend.entities.Job.WorkArrangement;
 import net.jobcompare.backend.repositories.*;
 import net.jobcompare.backend.services.*;
 
@@ -65,6 +66,27 @@ public class JobController {
     public ResponseEntity<List<Job>> findAllJobsByModId(@PathVariable Integer modId){
         List<Job> allJobsByMod = jobService.findByModId(modId);
         return ResponseEntity.ok(allJobsByMod);
+    }
+
+    // dedicated API endpoint for only 'ONSITE' work arrangement
+    @GetMapping("/jobs/work_arrangement/onsite")
+    public ResponseEntity<List<Job>> findAllOnsite(@PathVariable WorkArrangement workArrangement){
+        List<Job> onsitePositions = jobService.getAllOnsite();
+        return ResponseEntity.ok(onsitePositions);
+    }
+
+    // dedicated API endpoint for only 'REMOTE' work arrangement
+    @GetMapping("/jobs/work_arrangement/remote")
+    public ResponseEntity<List<Job>> findAllRemote(@PathVariable WorkArrangement workArrangement){
+        List<Job> onsitePositions = jobService.getAllRemote();
+        return ResponseEntity.ok(onsitePositions);
+    }
+
+    // dedicated API endpoint for only 'HYBRID' work arrangement
+    @GetMapping("/jobs/work_arrangement/hybrid")
+    public ResponseEntity<List<Job>> findAllHybrid(@PathVariable WorkArrangement workArrangement){
+        List<Job> onsitePositions = jobService.getAllHybrid();
+        return ResponseEntity.ok(onsitePositions);
     }
 
     // POST a new job offering

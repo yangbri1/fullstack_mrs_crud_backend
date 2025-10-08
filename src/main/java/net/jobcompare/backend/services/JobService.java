@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+
 // utilize when returning all job offerings
 import java.util.List;
 // import 'java.util.Optional' class to safely deal w/ (or avoid) 'NullPointerException'
@@ -60,6 +62,30 @@ public class JobService {
         List<Job> jobList = jobRepository.findByModId(modId);
         // return List of 'Job' objects 
         return jobList;
+    }
+
+    // retrieves only 'ONSITE' job offerings
+    public List<Job> getAllOnsite(){
+        List<Job> onsiteRoles = jobRepository.findByWorkArrangment(Job.WorkArrangement.ONSITE);
+        return onsiteRoles;
+    }
+
+    // retrieves only 'ONSITE' job offerings
+    public List<Job> getAllRemote(){
+        List<Job> remoteRoles = jobRepository.findByWorkArrangment(Job.WorkArrangement.REMOTE);
+        return remoteRoles;
+    }
+
+    // retrieves only 'ONSITE' job offerings
+    public List<Job> getAllHybrid(){
+        List<Job> hybridRoles = jobRepository.findByWorkArrangment(Job.WorkArrangement.HYBRID);
+        return hybridRoles;
+    }
+
+    // retrieve all job offerings --- for now very similar to above 'findByModId()'
+    public List<Job> findByWorkArrangement(WorkArrangement workArrangement){
+        // call on '.findByWorkArrangement()' method from 'JobRepository' class w/ given 'workArrangement' arg to retrieve a List of job offerings
+        return jobRepository.findByWorkArrangment(workArrangement);
     }
 
     // create a 'Job' after validating the input fields & .save() to DB table
