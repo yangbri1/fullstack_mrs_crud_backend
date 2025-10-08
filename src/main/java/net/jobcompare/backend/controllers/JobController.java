@@ -37,6 +37,9 @@ public class JobController {
     @Autowired
     private JobService jobService;          // declare instance variable 'jobRepository' to use custom methods, fields, etc.
 
+    @Autowired
+    private ModeratorService moderatorService;
+
     // mapping to 'http://localhost:8080/jobs' endpoint to retrieve all job offerings
     @GetMapping("/jobs")
     /* generics <> used here as ResponseEntity is a raw type to reference to generic type */
@@ -63,11 +66,11 @@ public class JobController {
     }
 
     // output all job offerings published under a certain moderator (modId)
-    @GetMapping("/moderators/{modId}/jobs")
-    public ResponseEntity<List<Job>> findAllJobsByModId(@PathVariable Integer modId){
-        List<Job> allJobsByMod = jobService.findByModId(modId);
-        return ResponseEntity.ok(allJobsByMod);
-    }
+    // @GetMapping("/moderators/{modId}/jobs")
+    // public ResponseEntity<List<Job>> findAllJobsByModId(@PathVariable Integer modId){
+    //     List<Job> allJobsByMod = moderatorService.findByModeratorId(modId);
+    //     return ResponseEntity.ok(allJobsByMod);
+    // }
 
     // dedicated API endpoint for only 'ONSITE' work arrangement
     @GetMapping("/jobs/work_arrangement/onsite")
@@ -103,7 +106,6 @@ public class JobController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
-    
 
     // POST a new job offering
     @PostMapping("/jobs")

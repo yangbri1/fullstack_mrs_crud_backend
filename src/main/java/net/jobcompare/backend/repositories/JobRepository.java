@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-// import 'Job.java' '@Entity' class
+// import 'Job.java' '@Entity' class & 'Moderator.java' '@Entity' class
 import net.jobcompare.backend.entities.*;
 import net.jobcompare.backend.entities.Job.WorkArrangement;
 
@@ -25,8 +25,10 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     //     public List<Job> findAllJobsByTeamId(Integer modId);
 
     // Spring JPA automatically implement this method signature
-    public List<Job> findByModId(Integer modId);
+    // public List<Job> findByModId(Integer modId); // --- no longer works b/c 'modId' is not quite a field in 'Job' entity, it's part of 'Moderator' obj
+    /* 'findByModerator_ModId()' traverse thru 'moderator' obj & access its 'modId' field */
+    public List<Job> findByModerator_ModId(Integer modId);
     // Spring JPA will implement this using 'enum' value
     // Aside: `Job.WorkArrangement` as enum is in 'Job' entity class (could separate enum if want more modularity)
-    public List<Job> findByWorkArrangment(Job.WorkArrangement workArrangement);
+    public List<Job> findByWorkArrangement(Job.WorkArrangement workArrangement);
 }

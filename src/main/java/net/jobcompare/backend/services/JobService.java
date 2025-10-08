@@ -4,6 +4,7 @@ package net.jobcompare.backend.services;
 // import entity classes
 import net.jobcompare.backend.entities.Job;
 import net.jobcompare.backend.entities.Job.WorkArrangement; // import enum for 'workArrangement' field to use 'WorkArrangement' obj data type
+import net.jobcompare.backend.entities.Moderator;
 // import 'JobRepository' class which extends from JPARepository --- containing some built-in CRUD methods
 import net.jobcompare.backend.repositories.JobRepository;
 
@@ -56,29 +57,30 @@ public class JobService {
         return null;
     }
 
+    /* OMITTED since 'findByModeratorId()' exists in 'ModeratorService' class */
     // retrieve all job offerings under specific 'modId'
-    public List<Job> findByModId(Integer modId){
-        // initialize 'jobList' List variable to gather up all 'Job' records associated to given 'modId'
-        List<Job> jobList = jobRepository.findByModId(modId);
-        // return List of 'Job' objects 
-        return jobList;
-    }
+    // public List<Job> findByModId(Integer modId){
+    //     // initialize 'jobList' List variable to gather up all 'Job' records associated to given 'modId'
+    //     List<Job> jobList = jobRepository.findByModId(modId);
+    //     // return List of 'Job' objects 
+    //     return jobList;
+    // }
 
     // retrieves only 'ONSITE' job offerings
     public List<Job> getAllOnsite(){
-        List<Job> onsiteRoles = jobRepository.findByWorkArrangment(Job.WorkArrangement.ONSITE);
+        List<Job> onsiteRoles = jobRepository.findByWorkArrangement(Job.WorkArrangement.ONSITE);
         return onsiteRoles;
     }
 
     // retrieves only 'ONSITE' job offerings
     public List<Job> getAllRemote(){
-        List<Job> remoteRoles = jobRepository.findByWorkArrangment(Job.WorkArrangement.REMOTE);
+        List<Job> remoteRoles = jobRepository.findByWorkArrangement(Job.WorkArrangement.REMOTE);
         return remoteRoles;
     }
 
     // retrieves only 'ONSITE' job offerings
     public List<Job> getAllHybrid(){
-        List<Job> hybridRoles = jobRepository.findByWorkArrangment(Job.WorkArrangement.HYBRID);
+        List<Job> hybridRoles = jobRepository.findByWorkArrangement(Job.WorkArrangement.HYBRID);
         return hybridRoles;
     }
 
@@ -86,7 +88,7 @@ public class JobService {
     // retrieve all job offerings --- for now very similar to above 'findByModId()'
     public List<Job> findByWorkArrangement(WorkArrangement workArrangement){
         // call on '.findByWorkArrangement()' method from 'JobRepository' class w/ given 'workArrangement' arg to retrieve a List of job offerings
-        return jobRepository.findByWorkArrangment(workArrangement);
+        return jobRepository.findByWorkArrangement(workArrangement);
     }
 
     // create a 'Job' after validating the input fields & .save() to DB table
@@ -150,7 +152,7 @@ public class JobService {
 
         Integer yearOfExperience = job.getYearOfExperience();
         WorkArrangement workArrangement = job.getWorkArrangement();
-        Integer moderatorId = job.getModId();
+        Moderator moderator = job.getModerator();
 
         // Long createdOn = job.getCreatedOn();
         Float yearlySalary = job.getYearlySalary();
@@ -180,7 +182,7 @@ public class JobService {
             position.setHiringTeamEmail(jobEmail);
             position.setYearOfExperience(yearOfExperience);
             position.setWorkArrangement(workArrangement);
-            position.setModId(moderatorId);
+            position.setModerator(moderator);
             // position.setCreatedOn(createdOn);
             position.setYearlySalary(yearlySalary);
 
