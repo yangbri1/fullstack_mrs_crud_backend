@@ -13,6 +13,7 @@ import net.jobcompare.backend.entities.Moderator;
 
 public interface ModeratorRepository extends JpaRepository<Moderator, Integer>{
 
-    public List<Job> findByModerator_ModId(Integer modId);
+    // this method tells Spring Data JPA to check out 'moderator' field in 'Job' & match 'modid' of Moderator
+    // public List<Job> findByModerator_ModId(Integer modId);
 
 }

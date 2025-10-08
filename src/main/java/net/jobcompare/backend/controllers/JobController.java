@@ -72,40 +72,48 @@ public class JobController {
     //     return ResponseEntity.ok(allJobsByMod);
     // }
 
-    // dedicated API endpoint for only 'ONSITE' work arrangement
-    @GetMapping("/jobs/work_arrangement/onsite")
-    public ResponseEntity<List<Job>> findAllOnsite(@PathVariable WorkArrangement workArrangement){
-        List<Job> onsitePositions = jobService.getAllOnsite();
-        return ResponseEntity.ok(onsitePositions);
-    }
+    // // dedicated API endpoint for only 'ONSITE' work arrangement
+    // @GetMapping("/jobs/work_arrangement/onsite")
+    // public ResponseEntity<List<Job>> findAllOnsite(){
+    //     List<Job> onsitePositions = jobService.getAllOnsite();
+    //     return ResponseEntity.ok(onsitePositions);
+    // }
 
-    // dedicated API endpoint for only 'REMOTE' work arrangement
-    @GetMapping("/jobs/work_arrangement/remote")
-    public ResponseEntity<List<Job>> findAllRemote(@PathVariable WorkArrangement workArrangement){
-        List<Job> onsitePositions = jobService.getAllRemote();
-        return ResponseEntity.ok(onsitePositions);
-    }
+    // // dedicated API endpoint for only 'REMOTE' work arrangement
+    // @GetMapping("/jobs/work_arrangement/remote")
+    // public ResponseEntity<List<Job>> findAllRemote(){
+    //     List<Job> remotePositions = jobService.getAllRemote();
+    //     return ResponseEntity.ok(remotePositions);
+    // }
 
-    // dedicated API endpoint for only 'HYBRID' work arrangement
-    @GetMapping("/jobs/work_arrangement/hybrid")
-    public ResponseEntity<List<Job>> findAllHybrid(@PathVariable WorkArrangement workArrangement){
-        List<Job> onsitePositions = jobService.getAllHybrid();
-        return ResponseEntity.ok(onsitePositions);
+    // // dedicated API endpoint for only 'HYBRID' work arrangement
+    // @GetMapping("/jobs/work_arrangement/hybrid")
+    // public ResponseEntity<List<Job>> findAllHybrid(){
+    //     List<Job> hybridPositions = jobService.getAllHybrid();
+    //     return ResponseEntity.ok(hybridPositions);
+    // }
+
+    // dyanmic API endpoint approach --- ex. 'http://localhost:8080/jobs/work_arrangement/hybrid'
+    // this essentially the above 3 dedicated API endpoint consolidated into 1
+    @GetMapping("/jobs/work_arrangement/{workArrangement}")
+    public ResponseEntity<List<Job>> findByWorkArrangement(@PathVariable WorkArrangement workArrangement) {
+        List<Job> filteredPositions = jobService.findByWorkArrangement(workArrangement);
+        return ResponseEntity.ok(filteredPositions);
     }
 
     // alternative filter way to retrieve work arrangement type
-    @GetMapping("/jobs/filter")
-    public ResponseEntity<List<Job>> findByWorkArrangement(@RequestParam("work_arrangement") WorkArrangement workArrangement){
-        // ex. HTTP GET Request: 'http://localhost:8080/jobs/filter?work_arrangement=HYBRID' -> returns 'HYBRID' job offerings
-        try {
-            // call 'findWorkArrangement()' from 'JobService' service layer to retrieve a List of job offerings
-            List<Job> filteredPositions = jobService.findByWorkArrangement(workArrangement);
-            return new ResponseEntity<>(filteredPositions, HttpStatus.CREATED);
-        } catch (Exception e) {
-            // if any exception arises, return status code 400 w/ null in response body
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
+    // @GetMapping("/jobs/filter")
+    // public ResponseEntity<List<Job>> findByWorkArrangement(@RequestParam("work_arrangement") WorkArrangement workArrangement){
+    //     // ex. HTTP GET Request: 'http://localhost:8080/jobs/filter?work_arrangement=HYBRID' -> returns 'HYBRID' job offerings
+    //     try {
+    //         // call 'findWorkArrangement()' from 'JobService' service layer to retrieve a List of job offerings
+    //         List<Job> filteredPositions = jobService.findByWorkArrangement(workArrangement);
+    //         return new ResponseEntity<>(filteredPositions, HttpStatus.CREATED);
+    //     } catch (Exception e) {
+    //         // if any exception arises, return status code 400 w/ null in response body
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    //     }
+    // }
 
     // POST a new job offering
     @PostMapping("/jobs")

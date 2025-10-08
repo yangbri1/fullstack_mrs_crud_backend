@@ -3,6 +3,9 @@ package net.jobcompare.backend.entities;
 
 // '@CreationTimestamp' annotation, Hibernate will use current timestamp of JVM as insert value (in milliseconds) since 1-1-1970
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 // import 'Instant' class from Java's 'Time' library to take snapshots in time 
 import java.time.Instant;
 
@@ -94,6 +97,8 @@ public class Job {
     /*--- '@ManyToOne' annotation to show 'modId' is a FOREIGN_KEY in 'jobs' DB but it's a PRIMARY_KEY in 'moderators' DB table -- the tables are connected ---*/
     @ManyToOne
     @JoinColumn(name = "mod_id", nullable = false)
+    // 'JsonIgnoreProperties' on moderator field to avoid lazy loading serialization issues
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Moderator moderator;
 
     @Column(name = "createdOn")

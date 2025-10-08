@@ -25,7 +25,7 @@ public class Moderator {
     @Column(name = "mod_id")
     // assign 'modId' field to be the id via '@Id' annotation
     @Id
-    // allow Spring to automatically generate id value (recommended)
+    // allow Hibernate to automatically generate id value (recommended --- for new moderator creation later)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer modId;
 
@@ -34,7 +34,7 @@ public class Moderator {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     // authentication later?
-    @Column(name = "password", nullable = false, unique = true)
-    private String password;
+    // @Column(name = "password", nullable = false, unique = true)
+    // private String password;
     
 }
