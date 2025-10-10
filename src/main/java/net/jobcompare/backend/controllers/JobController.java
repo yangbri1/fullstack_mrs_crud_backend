@@ -140,6 +140,7 @@ public class JobController {
     public ResponseEntity<Job> updateJobByJobId(
         @PathVariable Integer jobId,    // '@PathVariable' annotation will bind to simpler datatypes like String, Integer, Long, etc. from Path URL (not custom objects ex. 'Job', 'Account')
         @RequestBody Job job){          // '@RequestBody' annotation allows custom datatypes; data to travel as JSON String, XML, instead of as Path Variable
+        // 'Job job' --- aka backend expects entire 'Job' obj
         try{
             Job updatedJob = jobService.updateByJobId(jobId, job);
             // return HTTP status code 200 to be idempotent regardless if an actual entity was removed or not from 'Job' DB table & result from this deletion operation
