@@ -19,7 +19,9 @@ import net.jobcompare.backend.entities.Moderator;
 import net.jobcompare.backend.services.ModeratorService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+// @CrossOrigin(origins = "http://localhost:5173")
+// enables CORS to allow HTTP request from hosted GitHub Pages (static) front-end domain
+@CrossOrigin(origins = "https://yangbri1.github.io/fullstack_react_spring_boot_frontend/")
 @RequestMapping("/moderators")
 public class ModeratorController {
 
