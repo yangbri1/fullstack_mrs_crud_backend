@@ -102,6 +102,12 @@ https://www.baeldung.com/a-guide-to-java-enums
 https://stackoverflow.com/questions/67233340/how-do-i-validate-or-restrict-enum-type-to-accept-only-specific-values
 https://www.baeldung.com/jpa-persisting-enums-in-jpa
 
+* Cross-Origin Resource Sharing (`@CrossOrigin` annotation) only included path relating to the origin: 
+http://yangbri1.github.io
+
+(DO NOT include the latter half of URL path `/fullstack_react_spring_boot_frontend/` otherwise CORS will fail)
+
+
 * PEP Work - JDBC, Jackson, Bean, SQL, etc.
 
 - - -

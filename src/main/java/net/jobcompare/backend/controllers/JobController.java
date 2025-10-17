@@ -31,8 +31,8 @@ import java.util.List;
 
 @RestController     /* Aside: '@RestController' annotation introduced in v4 is a combination of '@RequestBody' & '@Controller' (@RequestBody by default) */
 // @CrossOrigin(origins = "http://localhost:5173")
-// enable CORS to allow requests from GitHub (static) Pages domain 
-@CrossOrigin(origins = "https://yangbri1.github.io/fullstack_react_spring_boot_frontend/")
+// enable CORS to allow requests from GitHub (static) Pages domain --- DO NOT include full URL path, only the origin (what's included) otw will fail
+@CrossOrigin(origins = "https://yangbri1.github.io")
 public class JobController {
     
     /* practice separation of concerns by strictly keeping the business logic to 'JobService' service layer */
