@@ -26,9 +26,9 @@ Build a fullstack application using Spring Boot & React. Back your data with a S
     ```
     git clone [repo]
     ```
-2. Install all dependencies needed to for this repo
+2. Install all dependencies needed to for this repo from pom.xml (Maven build tool)
     ```
-    npm install 
+    mvn clean install 
     ```
 ## LINK TO FRONT-END:
 > https://github.com/yangbri1/fullstack_react_spring_boot_frontend
