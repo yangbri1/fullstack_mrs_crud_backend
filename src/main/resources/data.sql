@@ -31,3 +31,7 @@ INSERT INTO jobs (title, description, company, location, year_of_experience, wor
 -- H2 will still handle new moderator 'mod_id' generation but they will start at 3xxx
 -- ALTER TABLE moderators ALTER COLUMN mod_id RESTART WITH 3000;
 -- Other entity class records could go below
+
+-- IMPORTANT: include this otherwise H2 will not auto-increment and will constantly attempt to rewrite id = 1
+-- Tells H2 console to handle 'mod_id' generation after 'mod_id' = 6
+ALTER TABLE moderators ALTER COLUMN mod_id RESTART WITH 7;
