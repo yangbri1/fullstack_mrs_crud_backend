@@ -4,6 +4,8 @@ package net.jobcompare.backend.services;
 // import entity classes
 import net.jobcompare.backend.entities.Job;
 import net.jobcompare.backend.entities.Job.WorkArrangement; // import enum for 'workArrangement' field to use 'WorkArrangement' obj data type
+import net.jobcompare.backend.exceptions.BadRequestException;
+import net.jobcompare.backend.exceptions.ResourceNotFoundException;
 import net.jobcompare.backend.entities.Moderator;
 // import 'JobRepository' class which extends from JPARepository --- containing some built-in CRUD methods
 import net.jobcompare.backend.repositories.JobRepository;
@@ -44,17 +46,22 @@ public class JobService {
 
     // retrieve  one job offering under 'jobId'
     public Job findByJobId(Integer jobId){
-        // call .findById() method to retrieve 'Job' entity/record from DB fitting given parameter 'jobId'
-        Optional<Job> jobOptional = jobRepository.findById(jobId);
-        // if value assigned to 'jobOptional' container obj is of a non-null nature ...
-        if(jobOptional.isPresent()){
-            // grab the value via .get() method from 'java.util.Optional' package
-            Job job = jobOptional.get();
-            // return 'Job' entity
-            return job;
-        }
-        // otw if the value from 'jobOptional' is indeed NULL ... return default falsy value (null)
-        return null;
+        // // call .findById() method to retrieve 'Job' entity/record from DB fitting given parameter 'jobId'
+        // Optional<Job> jobOptional = jobRepository.findById(jobId);
+        // // if value assigned to 'jobOptional' container obj is of a non-null nature ...
+        // if(jobOptional.isPresent()){
+        //     // grab the value via .get() method from 'java.util.Optional' package
+        //     Job job = jobOptional.get();
+        //     // return 'Job' entity
+        //     return job;
+        // }
+        // // otw if the value from 'jobOptional' is indeed NULL ... return default falsy value (null)
+        // return null;
+
+        return jobRepository.findById(jobId)
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "No job found with this id " + jobId
+            ));
     }
 
     /* OMITTED since 'findByModeratorId()' exists in 'ModeratorService' class */
@@ -92,8 +99,9 @@ public class JobService {
     }
 
     // create a 'Job' after validating the input fields & .save() to DB table
-    public Job createJob(Job job) throws Exception{
-        // initialization block for all the schema fields ... NOT really needed as helper function 'validateJobFields()' takes whole 'job' as argument
+    // public Job createJob(Job job) throws Exception{
+    public Job createJob(Job job){
+    // initialization block for all the schema fields ... NOT really needed as helper function 'validateJobFields()' takes whole 'job' as argument
         // String jobTitle = job.getTitle();
         // String jobCompany = job.getCompany();
         // String jobLocation = job.getLocation();
@@ -143,76 +151,107 @@ public class JobService {
     // }
 
     public Job updateByJobId(Integer jobId, Job job) throws Exception{
-        // initialization block for all the schema fields
-        String jobTitle = job.getTitle();
-        String jobCompany = job.getCompany();
-        String jobLocation = job.getLocation();
-        String jobDescription = job.getDescription();
-        String jobEmail = job.getHiringTeamEmail();
+        // // initialization block for all the schema fields
+        // String jobTitle = job.getTitle();
+        // String jobCompany = job.getCompany();
+        // String jobLocation = job.getLocation();
+        // String jobDescription = job.getDescription();
+        // String jobEmail = job.getHiringTeamEmail();
 
-        Integer yearOfExperience = job.getYearOfExperience();
-        WorkArrangement workArrangement = job.getWorkArrangement();
-        Moderator moderator = job.getModerator();
+        // Integer yearOfExperience = job.getYearOfExperience();
+        // WorkArrangement workArrangement = job.getWorkArrangement();
+        // Moderator moderator = job.getModerator();
 
-        // Long createdOn = job.getCreatedOn();
-        Float yearlySalary = job.getYearlySalary();
+        // // Long createdOn = job.getCreatedOn();
+        // Float yearlySalary = job.getYearlySalary();
 
-        // invoke helper function to validate 'Job' fields
-        validateJobFields(job);
+        // invoke helper function to validate incoming 'Job' data fields
+        // validateJobFields(job);
         
         // create an 'Optional' obj instance        
         // call .findById() method to retrieve 'Job' record from DB fitting given parameter 'jobId'
-        Optional<Job> jobOptional = jobRepository.findById(jobId);
-        // if 'jobId' DNE ...
-        if(jobOptional.isEmpty()){ // ' logic-wise, req. Optional to be declare earlier 
-        // if(!jobRepository.existsById(job.getJobId())){  // job.getModId()
-            throw new Exception("jobId(" + jobId + ") field DNE [UPDATE]");
-        }
+        // Optional<Job> jobOptional = jobRepository.findById(jobId);
+        // // if 'jobId' DNE ...
+        // if(jobOptional.isEmpty()){ // ' logic-wise, req. Optional to be declare earlier 
+        // // if(!jobRepository.existsById(job.getJobId())){  // job.getModId()
+        //     throw new Exception("jobId(" + jobId + ") field DNE [UPDATE]");
+        // }
         
-        // else if value assigned to 'jobOptional' container obj's value is NON-null
-        /* aka 'jobId' does EXIST ... below if-statement could be omitted */
-        if(jobOptional.isPresent()){
-            // grab the value via .get() method from 'java.util.Optional' package
-            Job position = jobOptional.get();
-            // extract 'description' field from provided 'Job' arg & use setter function to overwrite old 'description'
-            position.setDescription(job.getDescription());
-            position.setTitle(jobTitle);
-            position.setCompany(jobCompany);
-            position.setLocation(jobLocation);
-            position.setHiringTeamEmail(jobEmail);
-            position.setYearOfExperience(yearOfExperience);
-            position.setWorkArrangement(workArrangement);
-            position.setModerator(moderator);
-            // position.setCreatedOn(createdOn);
-            position.setYearlySalary(yearlySalary);
+        // // else if value assigned to 'jobOptional' container obj's value is NON-null
+        // /* aka 'jobId' does EXIST ... below if-statement could be omitted */
+        // if(jobOptional.isPresent()){
+        //     // grab the value via .get() method from 'java.util.Optional' package
+        //     Job position = jobOptional.get();
+        //     // extract 'description' field from provided 'Job' arg & use setter function to overwrite old 'description'
+        //     position.setDescription(job.getDescription());
+        //     position.setTitle(jobTitle);
+        //     position.setCompany(jobCompany);
+        //     position.setLocation(jobLocation);
+        //     position.setHiringTeamEmail(jobEmail);
+        //     position.setYearOfExperience(yearOfExperience);
+        //     position.setWorkArrangement(workArrangement);
+        //     position.setModerator(moderator);
+        //     // position.setCreatedOn(createdOn);
+        //     position.setYearlySalary(yearlySalary);
 
-            // persist changes to 'Job' DB table
-            jobRepository.save(position);
-            // tying up loose ends 
-            // jobRepository.deleteById(jobId);
-            // return updated job offering
-            return position;    // return 1
-        }
-        // otw if value from 'jobOptional' is indeed NULL ... return default falsy value (null)
-        return null;
+        //     // persist changes to 'Job' DB table
+        //     jobRepository.save(position);
+        //     // tying up loose ends 
+        //     // jobRepository.deleteById(jobId);
+        //     // return updated job offering
+        //     return position;    // return 1
+        // }
+        // // otw if value from 'jobOptional' is indeed NULL ... return default falsy value (null)
+        // return null;
+
+        // invoke helper fn to validate incoming data
+        validateJobFields(job);
+
+        // attempts to fetch exsting job or throw 404 NOT FOUND HTTP get status
+        Job position = jobRepository.findById(jobId)
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "Job w/ this ID DNE: " + jobId
+            ));
+        
+        // update those schema fields for 'Job' entity
+        position.setTitle(job.getTitle());
+        position.setCompany(job.getCompany());
+        position.setLocation(job.getLocation());
+        position.setDescription(job.getDescription());
+        position.setHiringTeamEmail(job.getHiringTeamEmail());
+        position.setYearOfExperience(job.getYearOfExperience());
+        position.setWorkArrangement(job.getWorkArrangement());
+        position.setModerator(job.getModerator());
+        position.setYearlySalary(job.getYearlySalary());
+        
+        // saves & return updated entity w/ new schema fields
+        return jobRepository.save(position);
     }
 
-    public Integer deleteByJobId(Integer jobId){    // void
-        // call .findById() method to retrieve 'Job' entity/record from DB fitting given parameter 'jobId'
-        Optional<Job> jobOptional = jobRepository.findById(jobId);
-        // if value assigned to 'jobOptional' container obj is of a non-null nature ...
-        if(jobOptional.isPresent()){
-            // use JpaRepository's .deleteById() method to remove 'Job' entity associated w/ passed in 'jobId'
-            jobRepository.deleteById(jobId);
-            // return 1 as wished (represents number of entity changed from this deletion process)
-            return 1;
+    public void deleteByJobId(Integer jobId){    // void
+        // // call .findById() method to retrieve 'Job' entity/record from DB fitting given parameter 'jobId'
+        // Optional<Job> jobOptional = jobRepository.findById(jobId);
+        // // if value assigned to 'jobOptional' container obj is of a non-null nature ...
+        // if(jobOptional.isPresent()){
+        //     // use JpaRepository's .deleteById() method to remove 'Job' entity associated w/ passed in 'jobId'
+        //     jobRepository.deleteById(jobId);
+        //     // return 1 as wished (represents number of entity changed from this deletion process)
+        //     return 1;
+        // }
+        // // otw if the value from 'jobOptional' is indeed NULL ... return default falsy value (null)
+        // return 0;
+
+        if(!jobRepository.existsById(jobId)){
+            throw new ResourceNotFoundException("Job not found w/ this id: " + jobId);
         }
-        // otw if the value from 'jobOptional' is indeed NULL ... return default falsy value (null)
-        return 0;
+
+        jobRepository.deleteById(jobId);
     }
 
     // helper function for 'Job' field validation (presented in both 'createJob()' & 'updateByJobId()' methods)
-    public void validateJobFields(Job job) throws Exception{
+    // public void validateJobFields(Job job) throws Exception{
+    public void validateJobFields(Job job){
+
         // initialzation block
         String jobTitle = job.getTitle();
         String jobCompany = job.getCompany();
@@ -222,12 +261,12 @@ public class JobService {
 
         // if job description fields does NOT contain anything ...
         if(jobTitle.isEmpty() || jobCompany.isEmpty() || jobLocation.isEmpty() || jobDescription.isEmpty() || jobEmail.isEmpty()){
-            throw new Exception("Schema field is empty ");
+            throw new BadRequestException("Schema field is empty ");
         }
         
         // else if any of the core job fields are above the character limit ...
         if(jobTitle.length() > 60 || jobCompany.length() > 20|| jobLocation.length() > 85 || jobDescription.length() > 4000 || jobEmail.length() > 60){
-            throw new Exception("Schema field exceeds length ");
+            throw new BadRequestException("Schema field exceeds length ");
         }
         
     }
