@@ -185,14 +185,26 @@ public class JobController {
 
     // API endpoint for deleting a job offering by its 'jobId'
     // @DeleteMapping("/jobs/{jobId}")
+    // @DeleteMapping("/{jobId}")
+    // public ResponseEntity<Integer> deleteJobByJobId(@PathVariable Integer jobId){
+    //     /* Before use: arg need to be of 'Integer' Complex object datatype matching what was initialized in 'Job.java' entity for 'jobId' ('Job' @Id) JpaRepository to <Job, Integer> 
+    //     -- otw different datatypes across the Entity -> Service -> Controller layers will cause extra complications! */
+    //     // Job jobByJobId = jobRepository.findById(jobId); 
+    //     Integer entityNumChanged = jobService.deleteByJobId(jobId);
+    //     // return HTTP status code 200 to be idempotent regardless if an actual entity was removed or not from 'Job' DB table & result from this deletion operation
+    //     return ResponseEntity.ok(entityNumChanged); 
+    //     // another way would be to split this up into an if-else flow control statement where if condition 'entityNumchanged == 1' run above, otw if else run above w/ .build()[no body for response entity] concatenated afterwards
+    //     // return new ResponseEntity<>(HttpStatus.OK);
+    // }
+
     @DeleteMapping("/{jobId}")
-    public ResponseEntity<Integer> deleteJobByJobId(@PathVariable Integer jobId){
+    public ResponseEntity<Void> deleteJobByJobId(@PathVariable Integer jobId){
         /* Before use: arg need to be of 'Integer' Complex object datatype matching what was initialized in 'Job.java' entity for 'jobId' ('Job' @Id) JpaRepository to <Job, Integer> 
         -- otw different datatypes across the Entity -> Service -> Controller layers will cause extra complications! */
         // Job jobByJobId = jobRepository.findById(jobId); 
-        Integer entityNumChanged = jobService.deleteByJobId(jobId);
-        // return HTTP status code 200 to be idempotent regardless if an actual entity was removed or not from 'Job' DB table & result from this deletion operation
-        return ResponseEntity.ok(entityNumChanged); 
+        jobService.deleteByJobId(jobId);
+        // return HTTP status code 204 to be idempotent regardless if an actual entity was removed or not from 'Job' DB table & result from this deletion operation
+        return ResponseEntity.noContent().build();
         // another way would be to split this up into an if-else flow control statement where if condition 'entityNumchanged == 1' run above, otw if else run above w/ .build()[no body for response entity] concatenated afterwards
         // return new ResponseEntity<>(HttpStatus.OK);
     }
