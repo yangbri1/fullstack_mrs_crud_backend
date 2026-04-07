@@ -185,7 +185,7 @@ public class JobController {
 
     // API endpoint for deleting a job offering by its 'jobId'
     // @DeleteMapping("/jobs/{jobId}")
-    @DeleteMapping("/{jobId")
+    @DeleteMapping("/{jobId}")
     public ResponseEntity<Integer> deleteJobByJobId(@PathVariable Integer jobId){
         /* Before use: arg need to be of 'Integer' Complex object datatype matching what was initialized in 'Job.java' entity for 'jobId' ('Job' @Id) JpaRepository to <Job, Integer> 
         -- otw different datatypes across the Entity -> Service -> Controller layers will cause extra complications! */
