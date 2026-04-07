@@ -74,14 +74,18 @@ public class JobController {
 
     // retrieve a job offering by its particular ID
     // @GetMapping("/jobs/{jobId}")
-    @GetMapping("/{jobId")
+    @GetMapping("/{jobId}")
     public ResponseEntity<Job> getJobById(@PathVariable Integer jobId){
         Job position = jobService.findByJobId(jobId);
-        // if attempt to fetch a 'job' fails ...
-        if(position == null){
-            // return HTTP status of 404 (NOT FOUND) & w/ a null response body
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        
+        /* Move error logic into the service where most of the business logic is SUPPOSED to happen */
+        // // if attempt to fetch a 'job' fails ...
+        // if(position == null){
+        //     // return HTTP status of 404 (NOT FOUND) & w/ a null response body
+        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        // }
+
+
         // otw if attempt was successful, return HTTP status code of 200 w/ found job
         return ResponseEntity.ok(position);
     }
