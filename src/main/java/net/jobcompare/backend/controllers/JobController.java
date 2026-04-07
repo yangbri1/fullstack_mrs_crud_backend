@@ -38,11 +38,21 @@ public class JobController {
     /* practice separation of concerns by strictly keeping the business logic to 'JobService' service layer */
     // @Autowired
     // private JobRepository jobRepository;    // to be able to use built-in basic CRUD operations from JpaRepository class
-    @Autowired
+    
+    // @Autowired
     private JobService jobService;          // declare instance variable 'jobRepository' to use custom methods, fields, etc.
-
-    @Autowired
+    // @Autowired
     private ModeratorService moderatorService;
+
+    /* RECOMMENDED: Constructor Injection 
+    ** This is recommended over field injecton via '@Autowired' b/c ...
+    ** 1) Ease of test
+    ** 2) Immutable dependencies
+    ** 3) Spring officially prefers this */
+    public JobController(JobService jobService, ModeratorService moderatorService){
+        this.jobService = jobService;
+        this.moderatorService = moderatorService;
+    }
 
     // mapping to 'http://localhost:8080/jobs' endpoint to retrieve all job offerings
     @GetMapping("/jobs")
